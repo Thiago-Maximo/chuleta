@@ -1,5 +1,12 @@
 <!-- CONECTAR NO BANCO E SELECIONAR AS INFORMAÇÕES -->
+<?php
+    include 'acesso_com.php';
+    include '../conn/connect.php';
 
+    $lista = $conn->query("select * from produtos");
+    $row = $lista->fetch_assoc();
+    $rows = $lista->num_rows;
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -33,17 +40,29 @@
             <tbody> <!-- início corpo da tabela -->
            	        <!-- início estrutura repetição -->
                 <!-- COMEÇO DO LAÇO -->
+                <?php do{ ?>
                     <tr>
                         <td class="hidden">
                             <!-- ID -->
+                            <?php echo $row['id']; ?>
                         </td>
                         <td>
                             <!-- RÓTULO -->
+                            <?php echo $row['rotulo']; ?>
                             <span class="visible-xs"></span>
                             <span class="hidden-xs"></span>
                         </td>
                         <td>
                             <!-- INFORMAÇÃO -->
+                            <?php 
+                            if($row['destaque']=='Sim'){
+                                echo '<span class="glypicon glypicon-star text-danger" aria-hidden="true"></span>';
+                            }else{
+                                echo '<span class="glypicon glypicon-ok text-success" aria-hidden="true"></span>';
+                            }
+                            echo '&nbsp';
+                            echo $row['descricao'];
+                            ?>
                         </td>
                         <td>
                             <?php echo $row['resumo']; ?>
@@ -81,7 +100,8 @@
 
                             </button>
                         </td>
-                    </tr>    
+                    </tr>
+                    <?php }while($row = $lista->fetch_assoc()); ?>    
                 <!-- FIM DO LAÇO -->  
             </tbody><!-- final corpo da tabela -->
         </table>

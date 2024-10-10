@@ -1,3 +1,37 @@
+<?php
+    include 'acesso_com.php';
+    include '../conn/connect.php';
+
+    if($_POST){
+        if(isset($_POST['enviar'])){
+            $nome_img = $_FILES['imagemgfile']['name'];
+            $tmp_img = $_FILES['imagemfile']['name'];
+            $rand = rand(100001,999999);
+            $dir_img = "../images/".$rand.$nome_img;
+            move_uploaded_file($tmp_img,$dir_img);
+        }
+
+        $id = $_POST['id_tipo'];
+        $destaque = $_POST['destaque'];
+        $descricao = $_POST['descricao'];
+        $resumo = $_POST['resumo'];
+        $valor = $_POST['valor'];
+        $imagem = $rand.$nome_img;
+
+        $insereProduto = "Insert produtos
+            (tipo_id,descricao, resumo,valor,imagem,destaque)
+            values
+            ($id,'$descricao','$resumo',$valor,'$imagem','$imagem','$destaque')
+        ";
+        $resultado = $conn->query($insereProduto);
+        if(mysqli_insert_id($conn)){
+            header("Location: produtos_lista.php");
+        }
+        $listaTipo = $conn->query("Select * from tipos order by rotulo");
+        $rowTipo = $listaTipo->fetch_assoc();
+        $numLinhas = $listaTipo->num_rows;
+    }
+?>
 <!-- CONECTAR COM O BANCO E SELECIONAR AS INFORMAÇÕES -->
 
 
