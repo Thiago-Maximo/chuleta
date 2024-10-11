@@ -13,19 +13,19 @@
             session_start();
             $session_name_new = session_name();
         }
-        if($numRow>0){
+        if ($numRow > 0) {
             $_SESSION['login_usuario'] = $login;
             $_SESSION['nivel_usuario'] = $rowLogin['nivel'];
             $_SESSION['nome_da_sessao'] = session_name();
-            if($rowLogin['nivel']=='sup'){
-                echo"<script>window.open('index.php','_self')</script>";
-            }else{
-                echo"<script>window.open('../cliente/index.php?cliente=".$login"','_self')</script>";
+            if ($rowLogin['nivel'] == 'sup') {
+                echo "<script>window.open('index.php','_self')</script>";
+            } else {
+                echo "<script>window.open('../cliente/index.php?cliente=" . $login . "','_self')</script>"; // Corrigido aqui
             }
+        } else {
+            echo "<script>window.open('invasor.php','_self')</script>";
         }
-        else{
-            echo"<script>window.open('invasor.php','_self')</script>";
-        }
+        
     }
 
 ?>
