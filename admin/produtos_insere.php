@@ -21,21 +21,21 @@
         $insereProduto = "Insert produtos
             (tipo_id,descricao, resumo,valor,imagem,destaque)
             values
-            ($id,'$descricao','$resumo',$valor,'$imagem','$imagem','$destaque')
+            ($id,'$descricao','$resumo',$valor,'$imagem','$destaque')
         ";
         $resultado = $conn->query($insereProduto);
         if(mysqli_insert_id($conn)){
             header("Location: produtos_lista.php");
         }
+    }
+        // selecionar a lista de tipos para preencher o <select>
         $listaTipo = $conn->query("Select * from tipos order by rotulo");
         $rowTipo = $listaTipo->fetch_assoc();
         $numLinhas = $listaTipo->num_rows;
-    }
 ?>
 <!-- CONECTAR COM O BANCO E SELECIONAR AS INFORMAÇÕES -->
 
 
-?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -70,8 +70,11 @@
                             </span>
                             <select name="id_tipo" id="id_tipo" class="form-control" required>
                                 <!-- COMEÇO DO LAÇO -->
-                                    
-                                
+                                <?php do{ ?>
+                                    <option value="<?php echo $rowTipo['id']; ?>">
+                                    <?php echo $rowTipo['rotulo']; ?>
+                                    </option>
+                                <?php }while($rowTipo = $listaTipo->fetch_assoc()); ?>
                                 <!-- FIM DO LAÇO -->
                             </select>
                         </div>
