@@ -1,5 +1,7 @@
 <?php 
-   include "acesso_com.php"
+   include "acesso_com.php";
+
+   
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
